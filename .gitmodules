@@ -1,0 +1,12 @@
+[submodule "submodules/werkzeug"]
+	path = submodules/werkzeug
+	url = https://github.com/mitsuhiko/werkzeug.git
+[submodule "submodules/flask"]
+	path = submodules/flask
+	url = https://github.com/mitsuhiko/flask.git
+[submodule "submodules/jinja2"]
+	path = submodules/jinja2
+	url = https://github.com/mitsuhiko/jinja2.git
+[submodule "submodules/itsdangerous"]
+	path = submodules/itsdangerous
+	url = https://github.com/mitsuhiko/itsdangerous.git
