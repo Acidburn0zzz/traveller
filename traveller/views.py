@@ -1,13 +1,22 @@
 from flask import g, Blueprint, render_template, request
 from google.appengine.api import users
 
+from traveller import models
+
 
 views = Blueprint("views", __name__)
 
 
 @views.before_request
 def get_user():
-    g.user = users.get_current_user()
+    user = users.get_current_user()
+
+    if not user:
+        g.user = None
+        return
+
+    g.user = models.Traveller.get_or_insert(
+        user.user_id(), nickname=user.nickname())
 
 
 @views.context_processor
