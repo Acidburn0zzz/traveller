@@ -1,7 +1,7 @@
-from flask import g, Blueprint, render_template, request
+from flask import g, Blueprint, render_template, request, redirect, flash
 from google.appengine.api import users
 
-from traveller import models
+from traveller import models, forms
 
 
 views = Blueprint("views", __name__)
@@ -36,3 +36,15 @@ def home():
     if not g.user:
         return render_template("home_anonymous.html")
     return render_template("home.html")
+
+
+@views.route("/preferences", methods=["GET", "POST"])
+def preferences():
+    form = forms.PreferencesForm(request.form, nickname=g.user.nickname)
+    if request.method == "POST" and form.validate():
+        if g.user.nickname != form.nickname.data:
+            g.user.nickname = form.nickname.data
+            g.user.put()
+        flash("preferences saved")
+        return redirect("/preferences")
+    return render_template("preferences.html", form=form)

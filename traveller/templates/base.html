@@ -1,0 +1,22 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <title>{% block title %}{% endblock %}</title>
+</head>
+<body>
+<header>
+  <p>welcome, {{ g.user.nickname }}</p>
+
+  <nav>
+  <ul>
+    <li><a href="{{ url_for(".home") }}">home</a></li>
+    <li><a href="{{ url_for(".preferences") }}">preferences</a></li>
+    <li><a href="{{ logout_url }}">log out</a></li>
+  </ul>
+  </nav>
+</header>
+
+{% block content %}
+{% endblock %}
+</body>
+</html>
