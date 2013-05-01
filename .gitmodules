@@ -10,3 +10,6 @@
 [submodule "submodules/itsdangerous"]
 	path = submodules/itsdangerous
 	url = https://github.com/mitsuhiko/itsdangerous.git
+[submodule "submodules/flask-wtf"]
+	path = submodules/flask-wtf
+	url = https://github.com/ajford/flask-wtf
