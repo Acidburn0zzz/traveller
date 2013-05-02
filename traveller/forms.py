@@ -18,3 +18,8 @@ class PreferencesForm(wtf.Form):
         q.filter("nickname =", field.data)
         if q.count(limit=1) != 0:
             raise ValidationError("that nickname is already taken")
+
+
+class JourneyForm(wtf.Form):
+    title = TextField('Name', [validators.Required(),
+                               validators.Length(min=3, max=50)])

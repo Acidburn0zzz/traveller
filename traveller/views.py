@@ -1,4 +1,12 @@
-from flask import g, Blueprint, render_template, request, redirect, flash
+from flask import (
+    Blueprint,
+    flash,
+    g,
+    redirect,
+    render_template,
+    request,
+    url_for,
+)
 from google.appengine.api import users
 
 from traveller import models, forms
@@ -35,7 +43,35 @@ def inject_auth_context():
 def home():
     if not g.user:
         return render_template("home_anonymous.html")
-    return render_template("home.html")
+
+    journey_query = models.Journey.all()
+    journey_query.ancestor(g.user)
+    # TODO: pagination
+    journeys = journey_query.run(limit=10)
+
+    return render_template(
+        "home.html",
+        journeys=journeys,
+    )
+
+
+@views.route("/journey/new", methods=["GET", "POST"])
+def new_journey():
+    form = forms.JourneyForm(request.form)
+    if request.method == "POST" and form.validate():
+        journey = models.Journey(
+            parent=g.user,
+            title=form.title.data,
+        )
+        journey.put()
+        return redirect(url_for(".journey", id=journey.key().id()))
+    return render_template("journey_new.html", form=form)
+
+
+@views.route("/journey/<int:id>")
+def journey(id):
+    journey = models.Journey.get_by_id(id, parent=g.user)
+    return render_template("journey.html", journey=journey)
 
 
 @views.route("/preferences", methods=["GET", "POST"])
@@ -46,5 +82,5 @@ def preferences():
             g.user.nickname = form.nickname.data
             g.user.put()
         flash("preferences saved")
-        return redirect("/preferences")
+        return redirect(url_for(".preferences"))
     return render_template("preferences.html", form=form)

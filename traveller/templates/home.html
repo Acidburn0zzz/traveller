@@ -2,5 +2,15 @@
 {% block title %}Home{% endblock %}
 
 {% block content %}
-things and stuff
+
+{% if journeys: -%}
+<ul>
+{% for journey in journeys: -%}
+<li><a href="{{ url_for(".journey", id=journey.key().id()) }}">{{ journey.title }}</a></li>
+{%- endfor %}
+</ul>
+{%- endif %}
+
+<p><a href="{{ url_for(".new_journey") }}">new journey</a></p>
+
 {% endblock %}
