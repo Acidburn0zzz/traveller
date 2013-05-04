@@ -13,3 +13,9 @@
 [submodule "submodules/flask-wtf"]
 	path = submodules/flask-wtf
 	url = https://github.com/ajford/flask-wtf
+[submodule "submodules/flask-oauth"]
+	path = submodules/flask-oauth
+	url = https://github.com/mitsuhiko/flask-oauth.git
+[submodule "submodules/oauth2"]
+	path = submodules/oauth2
+	url = https://github.com/simplegeo/python-oauth2.git
