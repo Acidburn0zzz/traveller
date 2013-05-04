@@ -1,0 +1,28 @@
+{% extends "base.html" %}
+{% block title %}Home{% endblock %}
+
+{% block content %}
+<form method="POST" action="{{ url_for(".new_journey") }}">
+  <table>
+    <tbody>
+      <tr>
+        <th scope="row">{{ form.title.label }}</th>
+        <td>
+          {{ form.title() }}
+          {% if form.title.errors: -%}
+          <span class="error">X</span>
+          {%- endif %}
+        </td>
+      </tr>
+    </tbody>
+    <tfoot>
+      <tr>
+        <td colspan="2">
+          {{ form.csrf_token }}
+          <input type="submit" value="create">
+        </td>
+      </tr>
+    </tfoot>
+  </table>
+</form>
+{% endblock %}
